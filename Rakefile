@@ -1,5 +1,8 @@
 require 'rake'
 require 'rspec/core/rake_task'
+require 'puppetlabs_spec_helper/rake_tasks'
+require 'puppet-lint/tasks/puppet-lint'
+
 task :default => [:test]
 
 desc 'Run RSpec'
@@ -30,7 +33,7 @@ def build_command(args)
   cmd_parts = []
   cmd_parts << "beaker"
   cmd_parts << "--options-file ./acceptance/.beaker-#{args[:type]}.cfg"
-  cmd_parts << "--hosts #{args[:hosts]}" if !args.hosts.empty?
-  cmd_parts << "--tests #{args.tests}" if !args.tests.empty?
+  cmd_parts << "--hosts #{args[:hosts]}" if !args[:hosts]
+  cmd_parts << "--tests #{args.tests}" if !args[:tests]
   cmd_parts.flatten.join(" ")
 end
